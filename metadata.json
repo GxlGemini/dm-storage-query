@@ -1,0 +1,5 @@
+{
+  "name": "DM Storage Query",
+  "description": "Mobile storage production date query system with Cloudflare D1 integration.",
+  "requestFramePermissions": []
+}

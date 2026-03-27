@@ -1,0 +1,9 @@
+name = "dm-storage-query"
+compatibility_date = "2024-03-27"
+pages_build_output_dir = "dist"
+
+# D1 Database Binding
+[[d1_databases]]
+binding = "DB"
+database_name = "qdrs"
+database_id = "51e2d6d9-1e6a-44ca-9d52-8bb861e33c7a"
