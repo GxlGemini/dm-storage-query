@@ -85,7 +85,7 @@ export default function App() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
           <div className="max-w-2xl text-white">
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              卓越存储品质 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">源于严苛智造</span>
+              卓越存储品质 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">源于严苛制造</span>
             </h1>
             <p className="text-xl md:text-2xl font-light mb-8 text-blue-100">
               每一片存储载体，都承载着我们对数据安全的极致承诺。
@@ -102,9 +102,9 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            <span className="text-[#E60012]">QDRS</span> 生产日期查询
+            <span className="text-[#E60012]">移动存储</span>生产日期查询：
           </h2>
-          <p className="text-sm text-gray-500 uppercase tracking-widest">Production Date Query</p>
+          <p className="text-sm text-gray-500 uppercase tracking-widest">Mobile Storage Production Date Query</p>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
