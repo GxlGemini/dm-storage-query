@@ -75,7 +75,7 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <div className="relative bg-blue-900 h-[400px] overflow-hidden">
+      <div className="relative bg-blue-900 h-[280px] overflow-hidden">
         <div 
           className="absolute inset-0 opacity-40 bg-cover bg-center mix-blend-overlay"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop')" }}
@@ -99,7 +99,7 @@ export default function App() {
       </div>
 
       {/* Query Section */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
             <span className="text-[#E60012]">QDRS</span> 生产日期查询
@@ -153,22 +153,22 @@ export default function App() {
               {result.length > 0 ? (
                 <div className="overflow-x-auto">
                   <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg overflow-hidden">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-gray-100 border-b border-gray-200">
                       <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <div className="flex items-center gap-2"><User className="h-4 w-4"/> 客户</div>
+                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5"><User className="h-4 w-4 text-gray-500"/> 客户</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/> 来料日期</div>
+                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-gray-500"/> 来料日期</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <div className="flex items-center gap-2"><Database className="h-4 w-4"/> 物料名称</div>
+                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5"><Database className="h-4 w-4 text-gray-500"/> 物料名称</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <div className="flex items-center gap-2"><HardDrive className="h-4 w-4"/> 容量</div>
+                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5"><HardDrive className="h-4 w-4 text-gray-500"/> 容量</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <div className="flex items-center gap-2"><Hash className="h-4 w-4"/> 丝印/激光码</div>
+                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5"><Hash className="h-4 w-4 text-gray-500"/> 丝印/激光码</div>
                         </th>
                       </tr>
                     </thead>
@@ -183,7 +183,7 @@ export default function App() {
                               {row.capacity}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-mono bg-gray-50">{row.mark_code}</td>
+                          <td className="px-6 py-4 text-sm text-gray-900 font-mono bg-gray-50/50 min-w-[250px] whitespace-normal break-words leading-relaxed">{row.mark_code}</td>
                         </tr>
                       ))}
                     </tbody>
