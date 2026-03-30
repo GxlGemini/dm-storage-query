@@ -152,38 +152,38 @@ export default function App() {
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
               {result.length > 0 ? (
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg overflow-hidden">
-                    <thead className="bg-gray-100 border-b border-gray-200">
+                  <table className="min-w-full divide-y divide-gray-100 border border-gray-100 rounded-lg overflow-hidden">
+                    <thead className="bg-gray-50/80 border-b border-gray-100">
                       <tr>
-                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><User className="h-4 w-4 text-gray-500"/> 品牌</div>
+                        <th scope="col" className="px-6 py-4 text-center text-sm font-medium text-gray-500 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5"><User className="h-4 w-4 text-gray-400"/> 品牌</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-gray-500"/> 生产日期</div>
+                        <th scope="col" className="px-6 py-4 text-center text-sm font-medium text-gray-500 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5"><Calendar className="h-4 w-4 text-gray-400"/> 生产日期</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><Database className="h-4 w-4 text-gray-500"/> 物料名称</div>
+                        <th scope="col" className="px-6 py-4 text-center text-sm font-medium text-gray-500 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5"><Database className="h-4 w-4 text-gray-400"/> 物料名称</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><HardDrive className="h-4 w-4 text-gray-500"/> 容量</div>
+                        <th scope="col" className="px-6 py-4 text-center text-sm font-medium text-gray-500 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5"><HardDrive className="h-4 w-4 text-gray-400"/> 容量</div>
                         </th>
-                        <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><Hash className="h-4 w-4 text-gray-500"/> 丝印/激光码</div>
+                        <th scope="col" className="px-6 py-4 text-center text-sm font-medium text-gray-500 whitespace-nowrap">
+                          <div className="flex items-center justify-center gap-1.5"><Hash className="h-4 w-4 text-gray-400"/> 丝印/激光码</div>
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-white divide-y divide-gray-100">
                       {result.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {row.customer}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"> {row.incoming_date}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"> {row.material_name}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                               {row.capacity}
+                        <tr key={idx} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="px-6 py-5 whitespace-nowrap text-sm font-medium text-gray-800 text-center align-middle">{row.customer}</td>
+                          <td className="px-6 py-5 whitespace-nowrap text-sm text-gray-600 text-center align-middle">{row.incoming_date}</td>
+                          <td className="px-6 py-5 whitespace-nowrap text-sm text-gray-600 text-center align-middle">{row.material_name}</td>
+                          <td className="px-6 py-5 whitespace-nowrap text-sm text-gray-600 text-center align-middle">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                              {row.capacity}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-900 font-mono bg-gray-50/50 min-w-[250px] whitespace-normal break-words leading-relaxed">{row.mark_code}</td>
+                          <td className="px-6 py-5 text-sm text-gray-700 font-mono bg-gray-50 min-w-[250px] whitespace-normal break-words leading-relaxed text-left align-middle">{row.mark_code}</td>
                         </tr>
                       ))}
                     </tbody>
