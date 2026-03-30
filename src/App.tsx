@@ -156,10 +156,10 @@ export default function App() {
                     <thead className="bg-gray-100 border-b border-gray-200">
                       <tr>
                         <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><User className="h-4 w-4 text-gray-500"/> 客户</div>
+                          <div className="flex items-center gap-1.5"><User className="h-4 w-4 text-gray-500"/> 品牌</div>
                         </th>
                         <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-gray-500"/> 来料日期</div>
+                          <div className="flex items-center gap-1.5"><Calendar className="h-4 w-4 text-gray-500"/> 生产日期</div>
                         </th>
                         <th scope="col" className="px-6 py-4 text-left text-sm font-semibold text-gray-700 whitespace-nowrap">
                           <div className="flex items-center gap-1.5"><Database className="h-4 w-4 text-gray-500"/> 物料名称</div>
@@ -175,12 +175,12 @@ export default function App() {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {result.map((row, idx) => (
                         <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{row.customer}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{row.incoming_date}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{row.material_name}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"> {row.customer}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"> {row.incoming_date}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600"> {row.material_name}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                              {row.capacity}
+                               {row.capacity}
                             </span>
                           </td>
                           <td className="px-6 py-4 text-sm text-gray-900 font-mono bg-gray-50/50 min-w-[250px] whitespace-normal break-words leading-relaxed">{row.mark_code}</td>
