@@ -32,13 +32,25 @@ const mockApiPlugin = () => {
               res.setHeader('Content-Type', 'application/json');
               
               const searchCode = data.mark_code ? data.mark_code.trim() : '';
+              const targetCapacity = data.capacity && data.capacity !== '全部' ? data.capacity.trim() : '';
               const keywords = searchCode.split(/\s+/).filter(Boolean);
               
-              // 模糊 + 分割匹配逻辑：必须包含所有关键词
+              // 模糊 + 分割 + 容量联合匹配逻辑
               const matchedResults = mockData.filter(item => {
-                if (!item.mark_code) return false;
-                // 检查该行数据是否包含用户输入的所有关键词
-                return keywords.every(kw => item.mark_code!.includes(kw));
+                // 如果指定了容量，兼容 4G 与 4GB 格式
+                if (targetCapacity) {
+                  const capWithB = targetCapacity.endsWith('B') ? targetCapacity : `${targetCapacity}B`;
+                  const capWithoutB = targetCapacity.endsWith('B') ? targetCapacity.slice(0, -1) : targetCapacity;
+                  if (item.capacity !== capWithB && item.capacity !== capWithoutB) {
+                    return false;
+                  }
+                }
+                // 如果输入了关键词，必须全部匹配
+                if (keywords.length > 0) {
+                  if (!item.mark_code) return false;
+                  return keywords.every(kw => item.mark_code!.includes(kw));
+                }
+                return true;
               });
 
               res.end(JSON.stringify({

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Database, HardDrive, Calendar, User, Hash, AlertCircle, Loader2 } from 'lucide-react';
+import { Search, Database, HardDrive, Calendar, User, Hash, AlertCircle, Loader2, Megaphone } from 'lucide-react';
 
 interface QueryResult {
   customer: string;
@@ -9,22 +9,26 @@ interface QueryResult {
   mark_code: string;
 }
 
+const CAPACITIES = ['2G', '4G', '8G', '16G', '32G', '64G', '128G', '256G', '400G', '512G', '1T'];
+
 export default function App() {
   const [markCode, setMarkCode] = useState('');
+  const [selectedCapacity, setSelectedCapacity] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<QueryResult[] | null>(null);
   const [error, setError] = useState('');
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!markCode.trim()) {
-      setError('请输入丝印/激光码');
+  const executeSearch = async (code: string, cap: string) => {
+    const trimmedCode = code.trim();
+    const trimmedCap = cap.trim();
+
+    if (!trimmedCode && !trimmedCap) {
+      setError('请输入丝印/激光码或选择容量');
       return;
     }
 
     setLoading(true);
     setError('');
-    setResult(null);
 
     try {
       const response = await fetch('/api/query', {
@@ -32,7 +36,10 @@ export default function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ mark_code: markCode.trim() }),
+        body: JSON.stringify({
+          mark_code: trimmedCode,
+          capacity: trimmedCap,
+        }),
       });
 
       const data = await response.json();
@@ -45,8 +52,8 @@ export default function App() {
       if (data.success && data.result && data.result.length > 0 && data.result[0].results) {
         setResult(data.result[0].results);
       } else if (data.result && Array.isArray(data.result)) {
-         // Fallback for mock or different D1 response format
-         setResult(data.result);
+        // Fallback for mock or different D1 response format
+        setResult(data.result);
       } else {
         setResult([]);
       }
@@ -54,6 +61,21 @@ export default function App() {
       setError(err.message || '查询过程中发生错误，请检查数据库配置');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    executeSearch(markCode, selectedCapacity);
+  };
+
+  const handleCapacitySelect = (cap: string) => {
+    const nextCap = selectedCapacity === cap ? '' : cap;
+    setSelectedCapacity(nextCap);
+
+    // 如果已输入丝印码或者已展示结果，点击容量即刻进行联合查询
+    if (markCode.trim() || result !== null) {
+      executeSearch(markCode, nextCap);
     }
   };
 
@@ -100,11 +122,24 @@ export default function App() {
 
       {/* Query Section */}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
             <span className="text-[#E60012]">移动存储</span>生产日期查询：
           </h2>
           <p className="text-sm text-gray-500 uppercase tracking-widest">Mobile Storage Production Date Query</p>
+        </div>
+
+        {/* Exquisite Fixed Announcement Box */}
+        <div className="flex justify-center mb-6 animate-in fade-in slide-in-from-top-2 duration-500">
+          <div className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-red-50/90 via-white to-red-50/80 border border-red-200/70 rounded-full px-4 sm:px-6 py-2 shadow-xs max-w-full">
+            <span className="inline-flex items-center gap-1 bg-[#E60012] text-white text-xs font-semibold px-2.5 py-0.5 rounded-full flex-shrink-0 shadow-xs">
+              <Megaphone className="h-3 w-3" />
+              <span>公告</span>
+            </span>
+            <span className="text-xs sm:text-sm text-gray-800 font-medium">
+              数据已更新至<strong className="text-[#E60012] font-bold">2026年9月</strong>！若还没查到您的批次，别急，数据小哥正在快马加鞭赶来的路上 🐎~
+            </span>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
@@ -136,6 +171,44 @@ export default function App() {
                   </>
                 )}
               </button>
+            </div>
+
+            {/* Capacity Quick-Select Buttons */}
+            <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2">
+              <span className="text-xs text-gray-500 font-medium flex items-center gap-1 mr-1">
+                <HardDrive className="h-3.5 w-3.5 text-gray-400" />
+                容量快捷筛选:
+              </span>
+              <button
+                type="button"
+                onClick={() => handleCapacitySelect('')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  selectedCapacity === ''
+                    ? 'bg-gray-800 text-white shadow-xs'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                }`}
+              >
+                全部
+              </button>
+              {CAPACITIES.map((cap) => (
+                <button
+                  key={cap}
+                  type="button"
+                  onClick={() => handleCapacitySelect(cap)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    selectedCapacity === cap
+                      ? 'bg-[#E60012] text-white font-semibold shadow-xs scale-105'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                  }`}
+                >
+                  {cap}
+                </button>
+              ))}
+              {selectedCapacity && (
+                <span className="text-xs text-gray-400 ml-2">
+                  已筛选容量: <strong className="text-[#E60012] font-semibold">{selectedCapacity}</strong>
+                </span>
+              )}
             </div>
           </form>
 

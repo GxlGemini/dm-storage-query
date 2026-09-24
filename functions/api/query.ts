@@ -3,10 +3,11 @@ export async function onRequestPost(context: any) {
   
   try {
     const body = await request.json();
-    const mark_code = body.mark_code;
+    const mark_code = (body.mark_code || '').trim();
+    const capacity = (body.capacity || '').trim();
     
-    if (!mark_code) {
-      return Response.json({ error: "mark_code is required" }, { status: 400 });
+    if (!mark_code && !capacity) {
+      return Response.json({ error: "请输入丝印/激光码或选择容量" }, { status: 400 });
     }
 
     // 检查是否绑定了 D1 数据库
@@ -14,19 +15,29 @@ export async function onRequestPost(context: any) {
       return Response.json({ error: "Cloudflare D1 Database binding 'DB' not found." }, { status: 500 });
     }
 
+    const whereClauses: string[] = [];
+    const bindParams: any[] = [];
+
     // 处理“分割”和“模糊”查询：将用户输入按空格分割成多个关键词
-    const keywords = mark_code.trim().split(/\s+/).filter(Boolean);
-    
-    if (keywords.length === 0) {
-      return Response.json({ success: true, result: [{ results: [] }] });
+    if (mark_code) {
+      const keywords = mark_code.split(/\s+/).filter(Boolean);
+      if (keywords.length > 0) {
+        const conditions = keywords.map(() => "mark_code LIKE ?").join(" AND ");
+        whereClauses.push(`(${conditions})`);
+        keywords.forEach((kw: string) => bindParams.push(`%${kw}%`));
+      }
     }
 
-    // 构建 SQL 语句，例如：SELECT * FROM qdrs WHERE mark_code LIKE ? AND mark_code LIKE ?
-    const conditions = keywords.map(() => "mark_code LIKE ?").join(" AND ");
-    const query = `SELECT * FROM qdrs WHERE ${conditions}`;
-    
-    // 构建绑定的参数数组，例如：['%关键词1%', '%关键词2%']
-    const bindParams = keywords.map((kw: string) => `%${kw}%`);
+    // 处理容量过滤（如果用户选择了特定容量且非全部，兼容 4G 与 4GB 格式）
+    if (capacity && capacity !== '全部') {
+      const capWithB = capacity.endsWith('B') ? capacity : `${capacity}B`;
+      const capWithoutB = capacity.endsWith('B') ? capacity.slice(0, -1) : capacity;
+      whereClauses.push("(capacity = ? OR capacity = ?)");
+      bindParams.push(capWithoutB, capWithB);
+    }
+
+    const whereSql = whereClauses.length > 0 ? `WHERE ${whereClauses.join(" AND ")}` : "";
+    const query = `SELECT * FROM qdrs ${whereSql}`;
 
     // 执行 D1 数据库查询
     const stmt = env.DB.prepare(query);
